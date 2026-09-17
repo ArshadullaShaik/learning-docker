@@ -1,6 +1,6 @@
 # Builiding my profuction bundle
 
-FROM node:22-alpine
+FROM node:22-alpine AS build
 
 WORKDIR /app
 
@@ -14,4 +14,6 @@ RUN npm run build
 
 #2 serving the bundling with an http server
 
+FROM nginx:1.27.0
 
+COPY --from=build /app/build /usr/share/nginx/html
